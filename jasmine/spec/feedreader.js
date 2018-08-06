@@ -75,16 +75,25 @@ $(function() {
     });
 
     describe('New feed Selection', function() {
-      // Load feed and call done
-      beforeEach(function(done) {
-        loadFeed(3, done)
+      it('changes the content', function(done) {
+        // Load the first feed
+        loadFeed(0, function() {
+          // save the value
+          const oldTitle = $('.header-title').text();
+          // Check is the feed we want
+          expect(oldTitle).toBe('Udacity Blog');
+          // Load second feed
+          loadFeed(1, function() {
+            // Save value
+            const newTitle =$('.header-title').text();
+            // Check is the feed we want
+            expect(newTitle).toBe('CSS Tricks');
+            // Check they are not the same
+            expect(newTitle).not.toBe(oldTitle);
+            done();
+          })
+        })
       });
-
-      it('changes the content', function() {
-        const title = $('.header-title').text();
-        expect(title).toBe('Linear Digressions');
-      });
-
     });
   });
 }());
